@@ -201,20 +201,6 @@ func (doc *Document) drawsTableTitles() {
 		"",
 	)
 
-	// Total HT
-	doc.pdf.SetX(ItemColTotalHTOffset)
-	doc.pdf.CellFormat(
-		ItemColTaxOffset-ItemColTotalHTOffset,
-		6,
-		doc.encodeString(doc.Options.TextItemsTotalHTTitle),
-		"0",
-		0,
-		"",
-		false,
-		0,
-		"",
-	)
-
 	// TOTAL TTC
 	doc.pdf.SetX(ItemColTotalTTCOffset)
 	doc.pdf.CellFormat(
@@ -334,27 +320,6 @@ func (doc *Document) appendTotal() {
 			doc.Options.GreyTextColor[2],
 		)
 
-		var descString bytes.Buffer
-		discountType, discountAmount := doc.Discount.getDiscount()
-		if discountType == DiscountTypePercent {
-			descString.WriteString("-")
-			descString.WriteString(discountAmount.String())
-			descString.WriteString(" % / -")
-			descString.WriteString(doc.ac.FormatMoneyDecimal(
-				doc.TotalWithoutTaxAndWithoutDocumentDiscount().Sub(doc.TotalWithoutTax())),
-			)
-		} else {
-			descString.WriteString("-")
-			descString.WriteString(doc.ac.FormatMoneyDecimal(discountAmount))
-			descString.WriteString(" / -")
-			descString.WriteString(
-				discountAmount.Mul(decimal.NewFromFloat(100)).Div(doc.TotalWithoutTax()).StringFixed(2),
-			)
-			descString.WriteString(" %")
-		}
-
-		doc.pdf.CellFormat(38, 7.5, doc.encodeString(descString.String()), "0", 0, "TR", false, 0, "")
-
 		doc.pdf.SetFont(doc.Options.Font, "", LargeTextFontSize)
 		doc.pdf.SetTextColor(
 			doc.Options.BaseTextColor[0],
@@ -382,51 +347,6 @@ func (doc *Document) appendTotal() {
 	} else {
 		doc.pdf.SetY(doc.pdf.GetY() + 10)
 	}
-
-	// // Draw tax title
-	// doc.pdf.SetX(120)
-	// doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
-	// doc.pdf.Rect(120, doc.pdf.GetY(), 40, 10, "F")
-	// doc.pdf.CellFormat(38, 10, doc.encodeString(doc.Options.TextTotalTax), "0", 0, "R", false, 0, "")
-	//
-	// // Draw tax amount
-	// doc.pdf.SetX(162)
-	// doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
-	// doc.pdf.Rect(160, doc.pdf.GetY(), 40, 10, "F")
-	// doc.pdf.CellFormat(
-	// 	40,
-	// 	10,
-	// 	doc.encodeString(doc.ac.FormatMoneyDecimal(doc.Tax())),
-	// 	"0",
-	// 	0,
-	// 	"L",
-	// 	false,
-	// 	0,
-	// 	"",
-	// )
-	//
-	// // Draw total with tax title
-	// doc.pdf.SetY(doc.pdf.GetY() + 10)
-	// doc.pdf.SetX(120)
-	// doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
-	// doc.pdf.Rect(120, doc.pdf.GetY(), 40, 10, "F")
-	// doc.pdf.CellFormat(38, 10, doc.encodeString(doc.Options.TextTotalWithTax), "0", 0, "R", false, 0, "")
-	//
-	// // Draw total with tax amount
-	// doc.pdf.SetX(162)
-	// doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
-	// doc.pdf.Rect(160, doc.pdf.GetY(), 40, 10, "F")
-	// doc.pdf.CellFormat(
-	// 	40,
-	// 	10,
-	// 	doc.encodeString(doc.ac.FormatMoneyDecimal(doc.TotalWithTax())),
-	// 	"0",
-	// 	0,
-	// 	"L",
-	// 	false,
-	// 	0,
-	// 	"",
-	// )
 }
 
 // appendPaymentTerm to document
