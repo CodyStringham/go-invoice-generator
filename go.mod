@@ -22,4 +22,4 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 )
 
-replace github.com/angelodlfrtr/go-invoice-generator => github.com/angelodlfrtr/go-invoice-generator v0.5.0
+replace github.com/angelodlfrtr/go-invoice-generator => github.com/CodyStringham/go-invoice-generator v0.5.0
