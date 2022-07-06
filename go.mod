@@ -1,4 +1,4 @@
-module github.com/CodyStringham/go-invoice-generator/v5
+module github.com/CodyStringham/go-invoice-generator/v6
 
 go 1.17
 
