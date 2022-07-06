@@ -3,7 +3,7 @@ module github.com/CodyStringham/go-invoice-generator
 go 1.17
 
 require (
-	github.com/angelodlfrtr/go-invoice-generator v0.5.0
+	github.com/CodyStringham/go-invoice-generator v0.5.0
 	github.com/creasty/defaults v1.6.0
 	github.com/go-pdf/fpdf v0.6.0
 	github.com/go-playground/validator/v10 v10.11.0
